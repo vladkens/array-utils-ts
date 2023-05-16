@@ -1,4 +1,3 @@
-import { uniq } from "lodash-es"
 import { test } from "uvu"
 import { equal } from "uvu/assert"
 import { filterEmpty, filterNullable, isUniq } from "../src/main"
@@ -42,25 +41,6 @@ test("filterEmpty", () => {
   equal(filterEmpty([1, "b", 3]), [1, "b", 3])
   equal(filterEmpty([1, "", "c"]), [1, "c"])
   equal(filterEmpty([1, undefined, "c"]), [1, "c"])
-})
-
-test("uniq", () => {
-  equal(uniq([1, 2, 3]), [1, 2, 3])
-  equal(uniq([1, 2, 1]), [1, 2])
-  equal(uniq(["a", "b", "c"]), ["a", "b", "c"])
-  equal(uniq(["a", "b", "a"]), ["a", "b"])
-  equal(uniq([1, "b", 3]), [1, "b", 3])
-  equal(uniq([1, "b", 1]), [1, "b"])
-  equal(uniq([]), [])
-  equal(uniq([null]), [null])
-  equal(uniq([undefined]), [undefined])
-  equal(uniq([null, undefined]), [null, undefined])
-  equal(uniq([1, true]), [1, true])
-  equal(uniq([true, true]), [true])
-
-  const a = { a: 1 }
-  equal(uniq([a, { b: 2 }]), [a, { b: 2 }])
-  equal(uniq([a, a]), [a])
 })
 
 test("isUniq", () => {
