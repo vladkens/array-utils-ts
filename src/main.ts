@@ -2,9 +2,9 @@ type NotNullable<T> = Exclude<T, null | undefined>
 type NotEmpty<T> = Exclude<T, null | undefined | "">
 type Dict = Record<string, any>
 
-export const uniq = <T>(arr: T[]): T[] => {
-  return Array.from(new Set(arr))
-}
+// export const uniq = <T>(arr: T[]): T[] => {
+//   return Array.from(new Set(arr))
+// }
 
 export const filterNullable = <T>(items: T[]): NotNullable<T>[] => {
   return items.filter((x): x is NotNullable<T> => x !== undefined && x !== null)
@@ -28,27 +28,27 @@ export const toggleItem = <T>(arr: T[], item: T): T[] => {
 
 // By Key
 
-export const updateByKey = <T extends Dict>(arr: T[], key: keyof T, val: T): T[] => {
-  if (!arr.map((x) => x[key]).includes(val[key])) return arr
-  return arr.map((x) => (x[key] === val[key] ? { ...x, ...val } : x))
+export const updateByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): T[] => {
+  if (!arr.map((x) => x[key]).includes(obj[key])) return arr
+  return arr.map((x) => (x[key] === obj[key] ? { ...x, ...obj } : x))
 }
 
-export const upsertByKey = <T extends Dict>(arr: T[], key: keyof T, val: T): T[] => {
-  if (arr.map((x) => x[key]).includes(val[key])) {
-    return arr.map((x) => (x[key] === val[key] ? { ...x, ...val } : x))
+export const upsertByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): T[] => {
+  if (arr.map((x) => x[key]).includes(obj[key])) {
+    return arr.map((x) => (x[key] === obj[key] ? { ...x, ...obj } : x))
   }
-  return [...arr, val]
+  return [...arr, obj]
 }
 
-export const toggleByKey = <T extends Dict>(arr: T[], key: keyof T, val: T) => {
+export const toggleByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T) => {
   const ids = arr.map((x) => x[key])
-  return ids.includes(val[key]) ? arr.filter((x) => x[key] !== val[key]) : [...arr, val]
+  return ids.includes(obj[key]) ? arr.filter((x) => x[key] !== obj[key]) : [...arr, obj]
 }
 
-export const isFirstByKey = <T extends Dict>(arr: T[], key: keyof T, val: T): boolean => {
-  return arr.findIndex((x) => x[key] === val[key]) === 0
+export const isFirstByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): boolean => {
+  return arr.findIndex((x) => x[key] === obj[key]) === 0
 }
 
-export const isLastByKey = <T extends Dict>(arr: T[], key: keyof T, val: T): boolean => {
-  return arr.findIndex((x) => x[key] === val[key]) === arr.length - 1
+export const isLastByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): boolean => {
+  return arr.findIndex((x) => x[key] === obj[key]) === arr.length - 1
 }

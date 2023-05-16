@@ -104,11 +104,78 @@ toggleItem([1, 2, 3], 3)
 ```typescript
 import { updateByKey } from "array-utils-ts"
 
-const arr = [{ id: 1 }, { id: 2 }]
+// prettier-ignore
+const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
 
-updateByKey([1, 2, 3], 4)
-// -> [1, 2, 3, 4]
+const arr2 = updateByKey(arr1, "id", { id: 1, v: 2 })
+// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
+// arr1 !== arr2
 
-updateByKey([1, 2, 3], 3)
-// -> [1, 2]
+const arr3 = updateByKey(arr2, "id", { id: 3, v: 1 })
+// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
+// arr2 === arr3 // note: item not found, nothing changed
+```
+
+### upsertByKey
+
+```typescript
+import { upsertByKey } from "array-utils-ts"
+
+// prettier-ignore
+const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
+
+const arr2 = upsertByKey(arr1, "id", { id: 1, v: 2 })
+// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
+// arr1 !== arr2
+
+const arr3 = upsertByKey(arr2, "id", { id: 3, v: 1 })
+// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }, { id: 3, v: 1 }]
+// arr2 !== arr3
+```
+
+### toggleByKey
+
+```typescript
+import { toggleByKey } from "array-utils-ts"
+
+// prettier-ignore
+const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
+
+const arr2 = toggleByKey(arr1, "id", { id: 1, v: 2 })
+// -> [{ id: 2, v: 1 }]
+// arr1 !== arr2
+
+const arr3 = toggleByKey(arr2, "id", { id: 3, v: 1 })
+// -> [{ id: 2, v: 1 }, { id: 3, v: 1 }]
+// arr2 !== arr3
+```
+
+### isFirstByKey
+
+```typescript
+import { isFirstByKey } from "array-utils-ts"
+
+// prettier-ignore
+const arr = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
+
+isFirstByKey(arr, "id", { id: 1, v: 2 })
+// -> true
+
+isFirstByKey(arr, "id", { id: 2, v: 1 })
+// -> false
+```
+
+### isLastByKey
+
+```typescript
+import { isLastByKey } from "array-utils-ts"
+
+// prettier-ignore
+const arr = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
+
+isLastByKey(arr, "id", { id: 1, v: 1 })
+// -> false
+
+isLastByKey(arr, "id", { id: 2, v: 1 })
+// -> true
 ```
