@@ -1,6 +1,6 @@
 import { test } from "uvu"
 import { equal } from "uvu/assert"
-import { filterEmpty, filterNullable, isUniq } from "../src/main"
+import { filterEmpty, filterNullable, hasEmpty, isUniq } from "./main"
 
 test("filterNullable", () => {
   equal(filterNullable([1, 2, 3]), [1, 2, 3])
@@ -60,6 +60,14 @@ test("isUniq", () => {
   const a = { a: 1 }
   equal(isUniq([a, { b: 2 }]), true)
   equal(isUniq([a, a]), false)
+})
+
+test("hasEmpty", () => {
+  equal(hasEmpty([1, 2, 3]), false)
+  equal(hasEmpty(["a", "b"]), false)
+  equal(hasEmpty(["a", "b", ""]), true)
+  equal(hasEmpty(["a", "b", null]), true)
+  equal(hasEmpty(["a", "b", undefined]), true)
 })
 
 test.run()

@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "array-utils-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Vlad Pronsky <v.pronsky@gmail.com>",
   "repository": "vladkens/array-utils-ts",
   "description": "",
@@ -12,11 +12,11 @@
   ],
   "scripts": {
     "build": "rm -rf dist && pkgroll --minify && ls -lah dist",
-    "test": "uvu -r tsm tests/",
+    "test": "uvu -r tsm src '\\.test\\.ts$'",
     "test-cov": "c8 --include=src yarn test",
     "test-watch": "watchexec -e ts 'clear && yarn test'",
-    "format": "prettier --write '{src,tests}/**/*.{js,jsx,ts,tsx}'",
-    "format-check": "prettier --check '{src,tests}/**/*.{js,jsx,ts,tsx}'"
+    "format": "prettier --write .",
+    "ci": "yarn test-cov && yarn build"
   },
   "dependencies": {},
   "devDependencies": {

@@ -19,7 +19,7 @@ export const isUniq = <T>(arr: T[]): boolean => {
 }
 
 export const hasEmpty = <T>(arr: T[]): boolean => {
-  return arr.every((el) => el !== null && el !== undefined && el !== "")
+  return !arr.every((el) => el !== null && el !== undefined && el !== "")
 }
 
 export const toggleItem = <T>(arr: T[], item: T): T[] => {
