@@ -87,18 +87,6 @@ toggleItem([1, 2, 3], 3)
 // -> [1, 2]
 ```
 
-### replaceItem
-
-```typescript
-import { replaceItem } from "array-utils-ts"
-
-toggleItem([1, 2, 3], 4)
-// -> [1, 2, 3, 4]
-
-toggleItem([1, 2, 3], 3)
-// -> [1, 2]
-```
-
 ### updateByKey
 
 ```typescript
@@ -142,40 +130,44 @@ import { toggleByKey } from "array-utils-ts"
 const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
 
 const arr2 = toggleByKey(arr1, "id", { id: 1, v: 2 })
-// -> [{ id: 2, v: 1 }]
-// arr1 !== arr2
+// -> [{ id: 2, v: 1 }]; arr1 !== arr2
 
 const arr3 = toggleByKey(arr2, "id", { id: 3, v: 1 })
-// -> [{ id: 2, v: 1 }, { id: 3, v: 1 }]
-// arr2 !== arr3
+// -> [{ id: 2, v: 1 }, { id: 3, v: 1 }]; arr2 !== arr3
 ```
 
 ### isFirstByKey
 
+Check if given object is first in collection by some key.
+
 ```typescript
 import { isFirstByKey } from "array-utils-ts"
 
-// prettier-ignore
-const arr = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
-
-isFirstByKey(arr, "id", { id: 1, v: 2 })
-// -> true
-
-isFirstByKey(arr, "id", { id: 2, v: 1 })
-// -> false
+const arr = [{ id: 1 }, { id: 2 }, { id: 3 }]
+isFirstByKey(arr, "id", { id: 1 }) // -> true
+isFirstByKey(arr, "id", { id: 2 }) // -> false
+isFirstByKey(arr, "id", { id: 3 }) // -> false
 ```
 
 ### isLastByKey
 
+Check if given object is last in collection by some key.
+
 ```typescript
 import { isLastByKey } from "array-utils-ts"
 
-// prettier-ignore
-const arr = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
+const arr = [{ id: 1 }, { id: 2 }, { id: 3 }]
+isLastByKey(arr, "id", { id: 1 }) // -> false
+isLastByKey(arr, "id", { id: 2 }) // -> false
+isLastByKey(arr, "id", { id: 3 }) // -> true
+```
 
-isLastByKey(arr, "id", { id: 1, v: 1 })
-// -> false
+### enumerate
 
-isLastByKey(arr, "id", { id: 2, v: 1 })
-// -> true
+```typescript
+import { enumerate } from "array-utils-ts"
+
+const arr = ["a", "b", "c"]
+enumerate(arr) // -> [[0, "a"], [1, "b"], [2, "c"]]
+enumerate(arr, 1) // -> [[1, "a"], [2, "b"], [3, "c"]]
 ```

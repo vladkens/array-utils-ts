@@ -5,5 +5,9 @@
   "files.exclude": {
     "coverage": true,
     "yarn.lock": true
+  },
+  "code-runner.executorMap": {
+    "typescript": "node --loader tsm",
+    "javascript": "node"
   }
 }

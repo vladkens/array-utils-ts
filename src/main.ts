@@ -52,3 +52,7 @@ export const isFirstByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): bo
 export const isLastByKey = <T extends Dict>(arr: T[], key: keyof T, obj: T): boolean => {
   return arr.findIndex((x) => x[key] === obj[key]) === arr.length - 1
 }
+
+export const enumerate = <T>(arr: T[], start = 0): [number, T][] => {
+  return arr.map((x, i) => [i + start, x])
+}
