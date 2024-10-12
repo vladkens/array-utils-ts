@@ -2,14 +2,7 @@
   "type": "module",
   "name": "array-utils-ts",
   "version": "0.1.2",
-  "author": "Vlad Pronsky <v.pronsky@gmail.com>",
-  "repository": "vladkens/array-utils-ts",
-  "description": "",
   "license": "MIT",
-  "keywords": [],
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "rm -rf dist && pkgroll --minify && ls -lah dist",
     "test": "uvu -r tsm src '\\.test\\.ts$'",
@@ -20,14 +13,21 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "c8": "^8.0.1",
-    "pkgroll": "^2.0.1",
-    "prettier": "^3.1.0",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "tsm": "^2.3.0",
-    "typescript": "^5.3.2",
-    "uvu": "^0.5.6"
+    "c8": "10.1.2",
+    "pkgroll": "2.5.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-organize-imports": "4.1.0",
+    "tsm": "2.3.0",
+    "typescript": "5.6.3",
+    "uvu": "0.5.6"
   },
+  "author": "Vlad Pronsky <v.pronsky@gmail.com>",
+  "repository": "vladkens/array-utils-ts",
+  "description": "",
+  "keywords": [],
+  "files": [
+    "dist"
+  ],
   "types": "./dist/main.d.cts",
   "exports": {
     "require": {

@@ -1,21 +1,13 @@
 # array-utils-ts
 
 <div align="center">
-  <a href="https://npmjs.org/package/array-utils-ts">
-    <img src="https://badgen.net/npm/v/array-utils-ts" alt="version" />
-  </a>
-  <a href="https://github.com/vladkens/array-utils-ts/actions">
-    <img src="https://github.com/vladkens/array-utils-ts/workflows/test/badge.svg" alt="test status" />
-  </a>
-  <a href="https://packagephobia.now.sh/result?p=array-utils-ts">
-    <img src="https://badgen.net/packagephobia/publish/array-utils-ts" alt="size" />
-  </a>
-  <!-- <a href="https://npmjs.org/package/array-utils-ts">
-    <img src="https://badgen.net/npm/dm/array-utils-ts" alt="downloads" />
-  </a> -->
-  <a href="https://github.com/vladkens/array-utils-ts/blob/main/LICENSE">
-    <img src="https://badgen.net/github/license/vladkens/array-utils-ts" alt="license" />
-  </a>
+
+[<img src="https://badgen.net/npm/v/array-utils-ts" alt="version" />](https://npmjs.org/package/array-utils-ts)
+[<img src="https://badgen.net/packagephobia/publish/array-utils-ts" alt="size" />](https://packagephobia.now.sh/result?p=array-utils-ts)
+[<img src="https://badgen.net/npm/dm/array-utils-ts" alt="downloads" />](https://npmjs.org/package/array-utils-ts)
+[<img src="https://badgen.net/github/license/vladkens/array-utils-ts" alt="license" />](https://github.com/vladkens/array-utils-ts/blob/main/LICENSE)
+[<img src="https://badgen.net/static/-/buy%20me%20a%20coffee/ff813f?icon=buymeacoffee&label" alt="donate" />](https://buymeacoffee.com/vladkens)
+
 </div>
 
 A set of functions for working with arrays, often necessary for working with state, but absent in lodash.
