@@ -15,6 +15,10 @@ A set of functions for working with arrays, often necessary for working with sta
 ## Install
 
 ```sh
+npm i array-utils-ts
+```
+
+```sh
 yarn add array-utils-ts
 ```
 

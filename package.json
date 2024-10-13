@@ -9,7 +9,8 @@
     "test-cov": "c8 --include=src yarn test",
     "test-watch": "watchexec -e ts 'clear && yarn test'",
     "format": "prettier --write .",
-    "ci": "yarn test-cov && yarn build"
+    "lint": "tsc --noEmit && prettier --check .",
+    "ci": "yarn lint && yarn test-cov && yarn build"
   },
   "dependencies": {},
   "devDependencies": {
