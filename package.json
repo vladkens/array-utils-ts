@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "array-utils-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && pkgroll --minify && ls -lah dist",
@@ -24,8 +24,22 @@
   },
   "author": "Vlad Pronsky <v.pronsky@gmail.com>",
   "repository": "vladkens/array-utils-ts",
-  "description": "",
-  "keywords": [],
+  "description": "Lightweight TypeScript utility library providing essential array manipulation functions for state management.",
+  "keywords": [
+    "array",
+    "generics",
+    "lodash",
+    "ramda",
+    "stdlib",
+    "ts",
+    "types",
+    "typescript",
+    "underscore",
+    "util",
+    "utilities",
+    "utility",
+    "utils"
+  ],
   "files": [
     "dist"
   ],
