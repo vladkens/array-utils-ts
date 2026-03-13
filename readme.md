@@ -3,14 +3,19 @@
 <div align="center">
 
 [<img src="https://badges.ws/npm/v/array-utils-ts" alt="version" />](https://npmjs.org/package/array-utils-ts)
-[<img src="https://badges.ws/packagephobia/publish/array-utils-ts" alt="size" />](https://packagephobia.now.sh/result?p=array-utils-ts)
+[<img src="https://packagephobia.com/badge?p=array-utils-ts" alt="size" />](https://packagephobia.com/result?p=array-utils-ts)
 [<img src="https://badges.ws/npm/dm/array-utils-ts" alt="downloads" />](https://npmjs.org/package/array-utils-ts)
 [<img src="https://badges.ws/github/license/vladkens/array-utils-ts" alt="license" />](https://github.com/vladkens/array-utils-ts/blob/main/LICENSE)
 [<img src="https://badges.ws/badge/-/buy%20me%20a%20coffee/ff813f?icon=buymeacoffee&label" alt="donate" />](https://buymeacoffee.com/vladkens)
 
 </div>
 
-A set of functions for working with arrays, often necessary for working with state, but absent in lodash.
+Array helpers for TypeScript that you keep writing by hand — filter nulls with real type narrowing, toggle and upsert objects by key, deduplicate. No lodash needed.
+
+- **Tiny.** 418 bytes (minified and brotli). Zero dependencies.
+- **Typed.** `filterNullable` actually narrows the return type — no more `(T | null)[]`.
+- **Immutable.** Every function returns a new array, safe to use directly in React `setState`.
+- **Fills the gap.** The specific helpers lodash skips: `upsertByKey`, `toggleByKey`, `filterNullable`.
 
 ## Install
 
@@ -18,152 +23,127 @@ A set of functions for working with arrays, often necessary for working with sta
 npm i array-utils-ts
 ```
 
-```sh
-yarn add array-utils-ts
-```
-
 ## Usage
 
-### filterNullable
-
 ```typescript
-import { filterNullable } from "array-utils-ts"
-
-filterNullable([1, null, 2, undefined])
-// -> [1, 2]
+import {
+  filterNullable,
+  filterEmpty,
+  hasEmpty,
+  uniq,
+  isUniq,
+  toggleItem,
+  updateByKey,
+  upsertByKey,
+  toggleByKey,
+  isFirstByKey,
+  isLastByKey,
+  enumerate,
+} from "array-utils-ts"
 ```
 
-### filterEmpty
+### Filter & Clean
+
+**filterNullable** — removes `null` and `undefined`, narrows the return type
 
 ```typescript
-import { filterEmpty } from "array-utils-ts"
-
-filterEmpty([1, null, 2, undefined, 3, "", "a"])
-// -> [1, 2, 3, "a"]
+filterNullable([1, null, 2, undefined]) // → [1, 2]  (typed as number[])
 ```
 
-### isUniq
+**filterEmpty** — also removes empty strings `""`
 
 ```typescript
-import { isUniq } from "array-utils-ts"
-
-isUniq([1, 2, 3])
-// -> true
-
-isUniq([1, 2, 1])
-// -> false
+filterEmpty([1, null, 2, undefined, 3, "", "a"]) // → [1, 2, 3, "a"]
 ```
 
-### hasEmpty
+**hasEmpty** — returns `true` if any element is `null`, `undefined`, or `""`
 
 ```typescript
-import { hasEmpty } from "array-utils-ts"
-
-hasEmpty(["a", "b", "c"])
-// -> false
-
-hasEmpty(["a", "", "c"])
-// -> true
-
-hasEmpty(["a", undefined, "c"])
-// -> true
+hasEmpty(["a", "b", "c"]) // → false
+hasEmpty(["a", "", "c"]) // → true
+hasEmpty(["a", undefined, "c"]) // → true
 ```
 
-### toggleItem
+### Deduplicate
 
-For example useful in `<select>` component
+**uniq** — removes duplicates
 
 ```typescript
-import { toggleItem } from "array-utils-ts"
-
-toggleItem([1, 2, 3], 4)
-// -> [1, 2, 3, 4]
-
-toggleItem([1, 2, 3], 3)
-// -> [1, 2]
+uniq([1, 2, 1, 3]) // → [1, 2, 3]
 ```
 
-### updateByKey
+**isUniq** — checks if all elements are unique
 
 ```typescript
-import { updateByKey } from "array-utils-ts"
-
-// prettier-ignore
-const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
-
-const arr2 = updateByKey(arr1, "id", { id: 1, v: 2 })
-// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
-// arr1 !== arr2
-
-const arr3 = updateByKey(arr2, "id", { id: 3, v: 1 })
-// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
-// arr2 === arr3 // note: item not found, nothing changed
+isUniq([1, 2, 3]) // → true
+isUniq([1, 2, 1]) // → false
 ```
 
-### upsertByKey
+### Toggle
+
+**toggleItem** — adds an item if missing, removes it if present; useful in multi-select UI
 
 ```typescript
-import { upsertByKey } from "array-utils-ts"
-
-// prettier-ignore
-const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
-
-const arr2 = upsertByKey(arr1, "id", { id: 1, v: 2 })
-// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }]
-// arr1 !== arr2
-
-const arr3 = upsertByKey(arr2, "id", { id: 3, v: 1 })
-// -> [{ id: 1, v: 2 }, { id: 2, v: 1 }, { id: 3, v: 1 }]
-// arr2 !== arr3
+toggleItem([1, 2, 3], 4) // → [1, 2, 3, 4]
+toggleItem([1, 2, 3], 3) // → [1, 2]
 ```
 
-### toggleByKey
+### Object Arrays (by key)
+
+**updateByKey** — updates a matching object; returns the same reference if not found
 
 ```typescript
-import { toggleByKey } from "array-utils-ts"
+const arr = [
+  { id: 1, v: 1 },
+  { id: 2, v: 1 },
+]
 
-// prettier-ignore
-const arr1 = [{ id: 1, v: 1 }, { id: 2, v: 1 }]
-
-const arr2 = toggleByKey(arr1, "id", { id: 1, v: 2 })
-// -> [{ id: 2, v: 1 }]; arr1 !== arr2
-
-const arr3 = toggleByKey(arr2, "id", { id: 3, v: 1 })
-// -> [{ id: 2, v: 1 }, { id: 3, v: 1 }]; arr2 !== arr3
+updateByKey(arr, "id", { id: 1, v: 2 }) // → [{ id: 1, v: 2 }, { id: 2, v: 1 }]
+updateByKey(arr, "id", { id: 3, v: 1 }) // → arr (same reference, not found)
 ```
 
-### isFirstByKey
-
-Check if given object is first in collection by some key.
+**upsertByKey** — updates if found, appends if not
 
 ```typescript
-import { isFirstByKey } from "array-utils-ts"
+const arr = [
+  { id: 1, v: 1 },
+  { id: 2, v: 1 },
+]
 
+upsertByKey(arr, "id", { id: 1, v: 2 }) // → [{ id: 1, v: 2 }, { id: 2, v: 1 }]
+upsertByKey(arr, "id", { id: 3, v: 1 }) // → [...arr, { id: 3, v: 1 }]
+```
+
+**toggleByKey** — removes an object if its key matches, appends it if not
+
+```typescript
+const arr = [
+  { id: 1, v: 1 },
+  { id: 2, v: 1 },
+]
+
+toggleByKey(arr, "id", { id: 1, v: 2 }) // → [{ id: 2, v: 1 }]
+toggleByKey(arr, "id", { id: 3, v: 1 }) // → [...arr, { id: 3, v: 1 }]
+```
+
+**isFirstByKey** / **isLastByKey** — check an object's position in the array
+
+```typescript
 const arr = [{ id: 1 }, { id: 2 }, { id: 3 }]
-isFirstByKey(arr, "id", { id: 1 }) // -> true
-isFirstByKey(arr, "id", { id: 2 }) // -> false
-isFirstByKey(arr, "id", { id: 3 }) // -> false
+
+isFirstByKey(arr, "id", { id: 1 }) // → true
+isFirstByKey(arr, "id", { id: 3 }) // → false
+isLastByKey(arr, "id", { id: 3 }) // → true
+isLastByKey(arr, "id", { id: 1 }) // → false
 ```
 
-### isLastByKey
+### Enumerate
 
-Check if given object is last in collection by some key.
-
-```typescript
-import { isLastByKey } from "array-utils-ts"
-
-const arr = [{ id: 1 }, { id: 2 }, { id: 3 }]
-isLastByKey(arr, "id", { id: 1 }) // -> false
-isLastByKey(arr, "id", { id: 2 }) // -> false
-isLastByKey(arr, "id", { id: 3 }) // -> true
-```
-
-### enumerate
+**enumerate** — pairs each element with its index, like Python's `enumerate()`
 
 ```typescript
-import { enumerate } from "array-utils-ts"
-
 const arr = ["a", "b", "c"]
-enumerate(arr) // -> [[0, "a"], [1, "b"], [2, "c"]]
-enumerate(arr, 1) // -> [[1, "a"], [2, "b"], [3, "c"]]
+
+enumerate(arr) // → [[0, "a"], [1, "b"], [2, "c"]]
+enumerate(arr, 1) // → [[1, "a"], [2, "b"], [3, "c"]]
 ```

@@ -1,5 +1,6 @@
-import { test } from "uvu"
-import { equal, not } from "uvu/assert"
+import { deepStrictEqual as equal, notDeepStrictEqual } from "node:assert"
+import { test } from "node:test"
+const not = { equal: notDeepStrictEqual }
 import {
   enumerate,
   filterEmpty,
@@ -10,6 +11,7 @@ import {
   isUniq,
   toggleByKey,
   toggleItem,
+  uniq,
   updateByKey,
   upsertByKey,
 } from "./main"
@@ -53,6 +55,13 @@ test("filterEmpty", () => {
   equal(filterEmpty([1, "b", 3]), [1, "b", 3])
   equal(filterEmpty([1, "", "c"]), [1, "c"])
   equal(filterEmpty([1, undefined, "c"]), [1, "c"])
+})
+
+test("uniq", () => {
+  equal(uniq([1, 2, 1, 3]), [1, 2, 3])
+  equal(uniq(["a", "b", "a"]), ["a", "b"])
+  equal(uniq([1, "b", 1]), [1, "b"])
+  equal(uniq([]), [])
 })
 
 test("isUniq", () => {
@@ -178,5 +187,3 @@ test("enumerate", () => {
   // prettier-ignore
   equal(enumerate(["a", "b", "c"], 1), [[1, "a"], [2, "b"], [3, "c"]])
 })
-
-test.run()

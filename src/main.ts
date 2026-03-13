@@ -2,9 +2,9 @@ type NotNullable<T> = Exclude<T, null | undefined>
 type NotEmpty<T> = Exclude<T, null | undefined | "">
 type Dict = Record<string, any>
 
-// export const uniq = <T>(arr: T[]): T[] => {
-//   return Array.from(new Set(arr))
-// }
+export const uniq = <T>(arr: T[]): T[] => {
+  return Array.from(new Set(arr))
+}
 
 export const filterNullable = <T>(items: T[]): NotNullable<T>[] => {
   return items.filter((x): x is NotNullable<T> => x !== undefined && x !== null)
